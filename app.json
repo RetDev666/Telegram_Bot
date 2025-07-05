@@ -1,0 +1,53 @@
+{
+  "name": "TikTok Live Analytics Bot",
+  "description": "Аналітика TikTok Live: статистика ефірів, дарувальники, діаманти й глядачі. Надсилай скріншоти — отримуй повні звіти.",
+  "repository": "https://github.com/your-username/tiktok-live-analytics-bot",
+  "logo": "https://cdn-icons-png.flaticon.com/512/3046/3046139.png",
+  "keywords": ["telegram", "bot", "tiktok", "analytics", "ocr", "python"],
+  "stack": "heroku-20",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-apt"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:mini"
+    }
+  ],
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Токен Telegram бота от @BotFather",
+      "required": true
+    },
+    "ADMIN_CHAT_ID": {
+      "description": "ID чата адміністратора",
+      "required": true
+    },
+    "GROUP_CHAT_ID": {
+      "description": "ID групового чата (опционально)",
+      "required": false
+    },
+    "ADMIN_USER_IDS": {
+      "description": "ID адміністраторів через кому (наприклад: 123456,789012)",
+      "required": true
+    },
+    "TESSERACT_PATH": {
+      "description": "Шлях до Tesseract OCR",
+      "value": "/app/.apt/usr/bin/tesseract",
+      "required": true
+    }
+  },
+  "scripts": {
+    "postdeploy": "python -c 'from database import db; db.init_database()'"
+  }
+} 
