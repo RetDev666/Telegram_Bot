@@ -1,0 +1,25 @@
+[build]
+builder = "nixpacks"
+buildCommand = "pip install -r requirements.txt"
+
+[deploy]
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+startCommand = "python railway-start.py"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+
+[variables]
+RAILWAY_DEPLOYMENT_PLATFORM = "railway"
+PYTHONPATH = "/app"
+PYTHONUNBUFFERED = "1"
+
+[environments.production]
+[environments.production.variables]
+RAILWAY_ENVIRONMENT = "production"
+TESSERACT_PATH = "/usr/bin/tesseract"
+
+[environments.development]
+[environments.development.variables]
+RAILWAY_ENVIRONMENT = "development"
+TESSERACT_PATH = "/usr/bin/tesseract" 

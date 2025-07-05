@@ -1,0 +1,30 @@
+[phases.setup]
+nixPkgs = [
+  "python311",
+  "pip",
+  "tesseract",
+  "opencv4",
+  "libGL",
+  "libglib"
+]
+
+[phases.install]
+cmds = [
+  "pip install -r requirements.txt"
+]
+
+[phases.build]
+cmds = [
+  "python -c 'from database import db; db.init_database()'"
+]
+
+[start]
+cmd = "python railway-start.py"
+
+[staticAssets]
+"static" = "./static"
+
+[env]
+TESSERACT_PATH = "/nix/store/*/bin/tesseract"
+PYTHONPATH = "/app"
+PYTHONUNBUFFERED = "1" 

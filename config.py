@@ -13,11 +13,14 @@ DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///tiktok_stats.db')
 
 # Автоматичне визначення середовища
 IS_HEROKU = os.getenv('DYNO') is not None
+IS_RAILWAY = os.getenv('RAILWAY_ENVIRONMENT') is not None
 PORT = int(os.getenv('PORT', 8000))
 
-# Tesseract шлях (різний для локального та Heroku)
+# Tesseract шлях (різний для локального, Heroku та Railway)
 if IS_HEROKU:
     TESSERACT_PATH = os.getenv('TESSERACT_PATH', '/app/.apt/usr/bin/tesseract')
+elif IS_RAILWAY:
+    TESSERACT_PATH = os.getenv('TESSERACT_PATH', '/usr/bin/tesseract')
 else:
     TESSERACT_PATH = os.getenv('TESSERACT_PATH', '/usr/bin/tesseract')
 
